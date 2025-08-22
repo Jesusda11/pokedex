@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokédex Digital</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <h1><span class="title-normal">Pokédex</span> <span class="title-highlight">Digital</span></h1>
+    <p>Descubre el mundo de los Pokémon</p>
+  </header>
+
+  <section class="search">
+    <div class="search-box">
+      <input type="text" placeholder="pachirisu">
+      <button class="btn search-btn">Buscar</button>
+      <button class="btn random-btn">Aleatorio</button>
+    </div>
+    <div class="filters">
+      <button>Todos</button>
+      <button>Fuego</button>
+      <button>Agua</button>
+      <button>Planta</button>
+      <button>Eléctrico</button>
+      <button>Psíquico</button>
+      <button>Hielo</button>
+      <button>Dragón</button>
+      <button>Siniestro</button>
+      <button>Hada</button>
+    </div>
+  </section>
+
+  <section class="pokemon-card">
+    <div class="pokemon-header">
+      <h2>Snorlax </h2>
+      <span class="pokemon-id">#417</span>
+    </div>
+    <div class="pokemon-img">
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/female/25.png" alt="Snorlax">      
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="Snorlax">      
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/25.png" alt="Snorlax">      
+    </div>
+    <div class="pokemon-type">
+      <span class="type electric">Eléctrico</span>
+    </div>
+  </section>
+
+  <section class="pokemon-info">
+    <div class="stats">
+      <h3>Estadísticas</h3>
+      <div class="stat"><span>Vida</span><div class="bar"><div style="width:60%"></div></div><span>60</span></div>
+      <div class="stat"><span>Ataque</span><div class="bar"><div style="width:45%"></div></div><span>45</span></div>
+      <div class="stat"><span>Defensa</span><div class="bar"><div style="width:70%"></div></div><span>70</span></div>
+      <div class="stat"><span>At. Especial</span><div class="bar"><div style="width:45%"></div></div><span>45</span></div>
+      <div class="stat"><span>Def. Especial</span><div class="bar"><div style="width:90%"></div></div><span>90</span></div>
+      <div class="stat"><span>Velocidad</span><div class="bar"><div style="width:95%"></div></div><span>95</span></div>
+    </div>
+
+    <div class="moves">
+      <h3>Movimientos</h3>
+      <br/>
+      <ul>
+        <li><strong>Thunder-Punch</strong> <br> <small>Tipo: Eléctrico | Potencia: 75 | Precisión: 100%</small></li>
+        <li><strong>Cut</strong> <br> <small>Tipo: Normal | Potencia: 50 | Precisión: 95%</small></li>
+        <li><strong>Headbutt</strong> <br> <small>Tipo: Normal | Potencia: 70 | Precisión: 100%</small></li>
+        <li><strong>Take-Down</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="navigation">
+    <button class="btn prev">← Anterior</button>
+    <button class="btn next">Siguiente →</button>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>

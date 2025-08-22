@@ -1,0 +1,269 @@
+/* Reset básico */
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+body {
+  background: #f5f5f5;
+  color: #333;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.title-normal {
+  color: #555;
+  font-weight: 600;
+}
+
+.title-highlight {
+  color: goldenrod;
+  font-weight: bold;
+}
+
+/* Buscador */
+.search-box {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.search-box input {
+  flex: 1;
+  max-width: 300px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* Botones */
+.btn, .filters button {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn:hover, .filters button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  opacity: 0.9;
+}
+
+/* Botón Buscar */
+.search-btn {
+  background: #3a2fa0;
+  color: white;
+}
+.search-btn:hover {
+  background: #2a1e80;
+}
+
+/* Botón Aleatorio */
+.random-btn {
+  background: goldenrod;
+  color: white;
+}
+.random-btn:hover {
+  background: #d4a017;
+}
+
+/* Botones de navegación */
+.prev {
+  background: #eee;
+}
+.prev:hover {
+  background: #ccc;
+}
+
+.next {
+  background: goldenrod;
+  color: white;
+}
+.next:hover {
+  background: #d4a017;
+}
+
+/* Botones de filtros */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.filters button {
+  background: #eee;
+  color: #333;
+  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+}
+.filters button:hover {
+  background: #3a2fa0;
+  color: white;
+}
+
+/* Pokémon card */
+.pokemon-card {
+  text-align: center;
+  background: linear-gradient(90deg, #3a2fa0, #647dee);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+}
+
+.pokemon-img img {
+  width: 120px;
+  height: auto;
+}
+
+.pokemon-type {
+  margin-top: 0.8rem;
+}
+
+.type {
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: white;
+}
+.type.electric {
+  background: goldenrod;
+}
+
+/* Stats & Moves contenedor */
+.pokemon-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: stretch; /* asegura misma altura */
+}
+
+
+.stats, .moves {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content:space-around;
+  flex-direction: column;
+}
+
+/* Stats */
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat span:first-child {
+  flex: 1;
+}
+
+.bar {
+  background: #ddd;
+  flex: 3;
+  height: 8px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar div {
+  background: #4caf50;
+  height: 100%;
+}
+
+/* Movimientos */
+.moves {
+  max-height: 320px; /* controla altura */
+  overflow-y: auto;
+}
+
+/* Scroll bonito */
+.moves::-webkit-scrollbar {
+  width: 8px;
+}
+.moves::-webkit-scrollbar-thumb {
+  background: #3a2fa0;
+  border-radius: 8px;
+}
+.moves::-webkit-scrollbar-track {
+  background: #e0e0e0;
+}
+
+.moves ul {
+  list-style: none;
+  padding: 0;
+}
+
+.moves li {
+  margin-bottom: 0.8rem;
+  background: #fff;
+  padding: 0.8rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-left: 6px solid transparent;
+}
+
+/* Hover animado en habilidades */
+.moves li:hover {
+  transform: translateX(6px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  border-left: 6px solid #3a2fa0;
+  background: #f3f0ff;
+}
+
+.moves li strong {
+  color: #3a2fa0;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.moves li small {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+/* Navegación */
+.navigation {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .pokemon-info {
+    grid-template-columns: 1fr;
+  }
+  .search-box {
+    flex-direction: column;
+  }
+}
