@@ -1,14 +1,21 @@
-console.log('Hola mudo');
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const pokemonRoutes = require('./routes/pokemonRoutes');
 
-import axios from 'axios';
+// Crea una instancia de la aplicación Express
+const app = express();
+const PORT = 3000;
 
-console.log("hi");
+// Habilita CORS para permitir peticiones desde el frontend
+app.use(cors());
 
+// Permite recibir y procesar datos en formato JSON
+app.use(express.json());
 
-axios.get('https://pokeapi.co/api/v2/pokemon/1')
-  .then(response => {
-    console.log(response.data);
-  })
-  .catch(error => {
-    console.error(error);
-  });
+// Define las rutas principales para la API de Pokémon
+app.use('/api/pokemon', pokemonRoutes);
+
+app.listen(PORT, () => {
+  console.log(`Servidor backend escuchando en http://localhost:${PORT}`);
+});
