@@ -97,4 +97,37 @@ async function obtenerPokemonesPorTipo(req, res) {
   }
 }
 
-module.exports = { obtenerPokemon: obtenerPokemonControlador, obtenerPokemonesPorTipo };
+async function buscarPokemonesPorNombre(req, res) {
+  try {
+    const texto = req.params.texto.toLowerCase();
+
+    // Obtiene la lista de todos los pokémon
+    const respuesta = await axios.get(`${urlBasePokeapi}/pokemon?limit=2000`);
+
+    // Filtra los que incluyan el texto y cuyo id esté entre 1 y 1025
+    const coincidencias = respuesta.data.results.filter(poke => {
+      if (!poke.name.includes(texto)) return false;
+      const match = poke.url.match(/\/pokemon\/(\d+)\//);
+      if (!match) return false;
+      const id = parseInt(match[1]);
+      return id >= 1 && id <= 1025;
+    });
+
+    // Obtener hasta 10 coincidencias con nombre + imagen pequeña (default)
+    const resultados = await Promise.all(
+      coincidencias.slice(0, 10).map(async poke => {
+        const datos = await obtenerPokemon(poke.name);
+        return {
+          nombre: datos.name.charAt(0).toUpperCase() + datos.name.slice(1),
+          imagen: datos.sprites.front_default 
+        };
+      })
+    );
+
+    res.json(resultados);
+  } catch (error) {
+    res.status(404).json({ error: 'No se encontraron coincidencias' });
+  }
+}
+
+module.exports = { obtenerPokemon: obtenerPokemonControlador, obtenerPokemonesPorTipo, buscarPokemonesPorNombre };

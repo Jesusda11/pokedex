@@ -1,6 +1,9 @@
 const express = require('express');
 const enrutador = express.Router();
-const { obtenerPokemon, obtenerPokemonesPorTipo } = require('../controllers/pokemonController');
+const { obtenerPokemon, obtenerPokemonesPorTipo, buscarPokemonesPorNombre  } = require('../controllers/pokemonController');
+
+// Ruta para buscar pokémones por nombre (coincidencias)
+enrutador.get('/buscar/:texto', buscarPokemonesPorNombre);
 
 // Ruta para obtener todos los pokémones de un tipo específico
 enrutador.get('/tipo/:tipo', obtenerPokemonesPorTipo);
