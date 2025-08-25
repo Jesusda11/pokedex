@@ -267,3 +267,46 @@ body {
     flex-direction: column;
   }
 }
+
+
+/* Autocomplete dropdown */
+.search-box {
+  position: relative; /* importante para posicionar la lista */
+}
+
+.autocomplete-list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 8px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  z-index: 9999;
+  overflow: auto;
+  max-height: 300px;
+  display: none;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.autocomplete-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.autocomplete-item img {
+  width: 40px;
+  height: 40px;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.active {
+  background: rgba(0,0,0,0.05);
+}
