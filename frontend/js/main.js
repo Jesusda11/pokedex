@@ -71,8 +71,10 @@ function renderizarImagenes(poke) {
 function renderizarTipos(poke) {
   containerTiposPokemon.innerHTML = '';
   (poke.types).forEach(t => {
+    console.log(t, "-> ", mapearTextoATipoApi(t));
+    
     const span = document.createElement('span');
-    span.classnombre = `type ${t}`;
+    span.className = `type ${mapearTextoATipoApi(t.toLowerCase())}`;
     span.textContent = capitalizar(t);
     span.dataset.type = t;
     containerTiposPokemon.appendChild(span);
@@ -174,19 +176,26 @@ async function manejadorFiltroTipo(tipo) {
 // Mapear texto del botón a tipo de la API (puedes mantenerlo)
 function mapearTextoATipoApi(texto) {
   const mapa = {
-    'fuego': 'fire',
-    'agua': 'water',
-    'planta': 'grass',
-    'eléctrico': 'electric',
-    'electrico': 'electric',
-    'psíquico': 'psychic',
-    'psiquico': 'psychic',
-    'hielo': 'ice',
-    'dragón': 'dragon',
-    'dragon': 'dragon',
-    'siniestro': 'dark',
-    'hada': 'fairy'
-  };
+  "acero":     "steel",
+  "agua":      "water",
+  "bicho":     "bug",
+  "dragón":    "dragon",
+  "eléctrico": "electric",
+  "fantasma":  "ghost",
+  "fuego":     "fire",
+  "hada":      "fairy",
+  "hielo":     "ice",
+  "lucha":     "fighting",
+  "normal":    "normal",
+  "planta":    "grass",
+  "psíquico":  "psychic",
+  "roca":      "rock",
+  "siniestro": "dark",
+  "tierra":    "ground",
+  "veneno":    "poison",
+  "volador":   "flying"
+};
+
   return mapa[texto];
 }
 
@@ -202,15 +211,8 @@ function inicializarListeners() {
     const btn = e.target.closest('button');
     if (!btn) return;
     const texto = btn.textContent.trim().toLowerCase();
-    if (texto === 'todos') {
-      mostrarPokemon('snorlax');
-      return;
-    }
+  
     const tipoApi = mapearTextoATipoApi(texto);
-    if (!tipoApi) {
-      alert('Tipo no reconocido: ' + texto);
-      return;
-    }
     manejadorFiltroTipo(tipoApi);
   });
 }
