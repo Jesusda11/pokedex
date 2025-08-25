@@ -141,8 +141,11 @@ body {
   height: auto;
 }
 
-.pokemon-type {
+.pokemon-type{
   margin-top: 0.8rem;
+  display: flex; 
+  justify-content: center; 
+  gap: 1rem;
 }
 
 .type {
@@ -151,9 +154,26 @@ body {
   font-size: 0.9rem;
   color: white;
 }
-.type.electric {
-  background: goldenrod;
-}
+
+.type.steel   { background: #B7B7CE; } /* Acero */
+.type.water   { background: #6390F0; } /* Agua */
+.type.bug     { background: #A6B91A; } /* Bicho */
+.type.dragon  { background: #6F35FC; } /* Dragón */
+.type.electric{ background: #F7D02C; } /* Eléctrico */
+.type.ghost   { background: #735797; } /* Fantasma */
+.type.fire    { background: #EE8130; } /* Fuego */
+.type.fairy   { background: #D685AD; } /* Hada */
+.type.ice     { background: #96D9D6; } /* Hielo */
+.type.fighting{ background: #776968; } /* Lucha */
+.type.normal  { background: #A8A77A; } /* Normal */
+.type.grass   { background: #7AC74C; } /* Planta */
+.type.psychic { background: #F95587; } /* Psíquico */
+.type.rock    { background: #B6A136; } /* Roca */
+.type.dark    { background: #705746; } /* Siniestro */
+.type.ground  { background: #E2BF65; } /* Tierra */
+.type.poison  { background: #A33EA1; } /* Veneno */
+.type.flying  { background: #A98FF3; } /* Volador */
+
 
 /* Stats & Moves contenedor */
 .pokemon-info {
@@ -266,4 +286,47 @@ body {
   .search-box {
     flex-direction: column;
   }
+}
+
+
+/* Autocomplete dropdown */
+.search-box {
+  position: relative; /* importante para posicionar la lista */
+}
+
+.autocomplete-list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 8px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  z-index: 9999;
+  overflow: auto;
+  max-height: 300px;
+  display: none;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.autocomplete-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.autocomplete-item img {
+  width: 40px;
+  height: 40px;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.active {
+  background: rgba(0,0,0,0.05);
 }
