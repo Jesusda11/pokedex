@@ -69,6 +69,7 @@ async function obtenerPokemonControlador(req, res) {
     };
 
     res.json(datos);
+    
   } catch (error) {
     res.status(404).json({ error: 'Pokémon no encontrado' });
   }

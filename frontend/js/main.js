@@ -25,6 +25,7 @@ async function obtenerPokemon(nombreOrId) {
     const nombreLimpio = nombreOrId.toLowerCase();
     const respuesta = await axios.get(`${POKEAPI_URL}/${nombreLimpio}`);
     const d = respuesta.data; 
+    
     //devuelve el formato organizado para manejar sus atributos facilmente
     return {
       nombre: d.nombre,
@@ -36,7 +37,7 @@ async function obtenerPokemon(nombreOrId) {
         front_female: d.imagenes?.female ?? null
       },
       stats: (d.estadisticas || []).map(s => ({ stat: { nombre: s.nombre }, valor: s.valor })),
-      moves: (d.movimientos || []).map(m => ({ move: { nombre: m.nombre}}))
+      moves: (d.movimientos || []).map(m => ({ move: { nombre: m.nombre, potencia: m.potencia, precision: m.precision || '—', tipo: m.tipo || '???' }}))
     };
   } catch (err) {
     throw new Error('Pokémon no encontrado');
@@ -107,17 +108,20 @@ function renderizarEstadisticas(poke) {
 
 function renderizarMovimientos(poke) {
   listaMovimientos.innerHTML = '';
+  
   const movimientosAMostrar = (poke.moves || []).slice(0, 6);
   if (movimientosAMostrar.length === 0) {
     listaMovimientos.innerHTML = '<li>No hay movimientos</li>';
     return;
   }
-  movimientosAMostrar.forEach(m => {
-    const d = m.details || {};
-    const nombre = d.nombre || m.move.nombre || 'Movimiento';
-    const potencia = (d.potencia ?? '—');
-    const precision = (d.precision ?? '—');
-    const tipo = d.tipo ? capitalizar(d.tipo) : '???';
+  
+
+  movimientosAMostrar.forEach(m => {  
+    console.log(m);
+    const nombre = m.move.nombre;
+    const potencia = (m.move.potencia ?? '—');
+    const precision = (m.move.precision ?? '—');
+    const tipo = m.move.tipo ? capitalizar(m.move.tipo) : '???';
     const li = document.createElement('li');
     li.innerHTML = `<strong>${capitalizar(nombre)}</strong><br/><small>Tipo: ${tipo} | Potencia: ${potencia} | Precisión: ${precision}</small>`;
     listaMovimientos.appendChild(li);
@@ -129,6 +133,7 @@ async function mostrarPokemon(nombreOrId) {
     mostrarLoader(); // 👉 mostramos a Ditto antes de pedir datos
     
     const poke = await obtenerPokemon(nombreOrId);
+    
     renderCartaPokemon(poke);
     renderizarImagenes(poke);
     renderizarTipos(poke);
