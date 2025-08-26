@@ -1,6 +1,3 @@
-const VALOR_MAX_ESTADISTICA = 255;
-
-
 // Selectores DOM
 const inputBuscador = document.querySelector('.search-box input');
 const btnBuscar = document.querySelector('.search-btn');
@@ -62,17 +59,34 @@ function renderizarImagenes(poke) {
 
   urls.slice(0, 3).forEach(u => {
     const imgEl = document.createElement('img');
-    imgEl.src = u;
-    imgEl.alt = poke.nombre;
-    containerImagenesPokemon.appendChild(imgEl);
+    imgEl.src = u;  
+    imgEl.title = poke.nombre
+    if(u.includes('shiny')){
+      imgEl.title = poke.nombre + " shiny";
+    }else if(u.includes('female')) {
+      imgEl.title = poke.nombre + " female";
+    }
+  
+    // Creamos un contenedor para el tooltip
+  const wrapper = document.createElement('div');
+  wrapper.className = 'tooltip-container';
+
+  // Creamos el tooltip
+  const tooltip = document.createElement('span');
+  tooltip.className = 'tooltip-text';
+  tooltip.textContent = imgEl.title;
+
+  // Insertamos imagen y tooltip dentro del contenedor
+  wrapper.appendChild(imgEl);
+  wrapper.appendChild(tooltip);
+
+  containerImagenesPokemon.appendChild(wrapper);
   });
 }
 
 function renderizarTipos(poke) {
   containerTiposPokemon.innerHTML = '';
   (poke.types).forEach(t => {
-    console.log(t, "-> ", mapearTextoATipoApi(t));
-    
     const span = document.createElement('span');
     span.className = `type ${mapearTextoATipoApi(t.toLowerCase())}`;
     span.textContent = capitalizar(t);
@@ -110,22 +124,25 @@ function renderizarMovimientos(poke) {
   });
 }
 
-
 async function mostrarPokemon(nombreOrId) {
-  
   try {
+    mostrarLoader(); // 👉 mostramos a Ditto antes de pedir datos
+    
     const poke = await obtenerPokemon(nombreOrId);
     renderCartaPokemon(poke);
     renderizarImagenes(poke);
     renderizarTipos(poke);
     renderizarEstadisticas(poke);
     renderizarMovimientos(poke);
-    btnAnterior.disabled = poke.id === 1; //si esta en el primer pokemon no puede haber mas atras
+    btnAnterior.disabled = poke.id === 1; 
     btnSiguiente.disabled = false;
   } catch (err) {
     alert(err.message || 'Error obteniendo Pokémon');
-  } 
+  } finally {
+    ocultarLoader(); // 👉 ocultamos a Ditto cuando ya se renderizó
+  }
 }
+
 
 async function manejadorBusqueda() {
   const busqueda = inputBuscador.value.trim();
@@ -217,8 +234,72 @@ function inicializarListeners() {
   });
 }
 
+const listaAutocomplete = document.createElement('div');
+listaAutocomplete.className = 'autocomplete-list None';
+document.querySelector('.search-box').appendChild(listaAutocomplete);
+listaAutocomplete.style.display = 'none';
+
+// Escucha cuando el usuario escribe
+inputBuscador.addEventListener('input', async () => {
+  const texto = inputBuscador.value.trim().toLowerCase();
+
+  if (texto.length < 1) {
+    listaAutocomplete.style.display = 'none';
+    return;
+  }
+
+  try {
+    // Llamada a el backend de node
+    const res = await axios.get(`${POKEAPI_URL}/buscar/${texto}`);
+    const sugerencias = res.data;
+
+    // Renderizar resultados
+    listaAutocomplete.innerHTML = '';
+    sugerencias.forEach(poke => {
+      const item = document.createElement('div');
+      item.className = 'autocomplete-item';
+      item.innerHTML = `
+        <img src="${poke.imagen}" alt="${poke.nombre}">
+        <span>${poke.nombre}</span>
+      `;
+
+      item.addEventListener('click', () => {
+        inputBuscador.value = poke.nombre;
+        listaAutocomplete.style.display = 'none';
+        mostrarPokemon(poke.nombre.toLowerCase());
+      });
+
+      listaAutocomplete.appendChild(item);
+    });
+
+    listaAutocomplete.style.display = 'block';
+  } catch (err) {
+    console.error('Error buscando pokémon:', err);
+    listaAutocomplete.style.display = 'none';
+  }
+});
+
+//esconder la lista si se enfoca en otro elemento
+document.addEventListener('click', (e) => {
+  if (!document.querySelector('.search-box').contains(e.target)) {
+    listaAutocomplete.style.display = 'none';
+  }
+});
+
+const loader = document.getElementById('loader');
+
+function mostrarLoader() {
+  loader.classList.remove('hidden');
+}
+
+function ocultarLoader() {
+  loader.classList.add('hidden');
+}
+
+
+
 function iniciar() {
   inicializarListeners();
-  mostrarPokemon('snorlax'); // pokemon por defectoar
+  mostrarPokemon('pikachu'); // pokemon por defectoar
 }
 iniciar();
